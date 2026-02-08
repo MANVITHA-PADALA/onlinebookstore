@@ -1,0 +1,53 @@
+<div class="auth-wrapper">
+  <div class="auth-box">
+    <h1>Login</h1>
+    <p>Access the Book Store Management System</p>
+    
+    <form class="auth-form" #loginForm="ngForm">
+      
+      <div style="margin-bottom: 15px; text-align: left;">
+        <input 
+          type="email" 
+          name="email"
+          [(ngModel)]="user.email" 
+          #email="ngModel"
+          required 
+          email
+          placeholder="Email Address"
+          [style.border-color]="email.invalid && email.touched ? '#e74c3c' : '#ced4da'"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid; outline: none;"
+        >
+        <small *ngIf="email.invalid && email.touched" style="color: #e74c3c; font-size: 11px;">Enter a valid email address.</small>
+      </div>
+
+      <div style="margin-bottom: 15px; text-align: left;">
+        <input 
+          type="password" 
+          name="password"
+          [(ngModel)]="user.password" 
+          #password="ngModel"
+          required 
+          minlength="6"
+          placeholder="Password"
+          [style.border-color]="password.invalid && password.touched ? '#e74c3c' : '#ced4da'"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid; outline: none;"
+        >
+        <small *ngIf="password.invalid && password.touched" style="color: #e74c3c; font-size: 11px;">Password must be at least 6 characters.</small>
+      </div>
+
+      <button 
+        (click)="onLogin()" 
+        [disabled]="loginForm.invalid"
+        [style.opacity]="loginForm.invalid ? '0.5' : '1'"
+        [style.cursor]="loginForm.invalid ? 'not-allowed' : 'pointer'"
+      >
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </div>
+  </div>
+</div>

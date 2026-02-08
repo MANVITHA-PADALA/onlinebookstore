@@ -1,0 +1,67 @@
+<div class="auth-wrapper">
+  <div class="auth-box">
+    <h1>Create Account</h1>
+    
+    <form class="auth-form" #regForm="ngForm">
+      
+      <div style="margin-bottom: 15px; text-align: left;">
+        <input 
+          type="text" 
+          name="username"
+          [(ngModel)]="user.username" 
+          #username="ngModel"
+          required 
+          minlength="3"
+          placeholder="Full Name"
+          [style.border-color]="username.invalid && username.touched ? '#e74c3c' : '#ced4da'"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid; outline: none;"
+        >
+        <small *ngIf="username.invalid && username.touched" style="color: #e74c3c; font-size: 11px;">Name must be at least 3 characters.</small>
+      </div>
+
+      <div style="margin-bottom: 15px; text-align: left;">
+        <input 
+          type="email" 
+          name="email"
+          [(ngModel)]="user.email" 
+          #regEmail="ngModel"
+          required 
+          email
+          placeholder="Email Address"
+          [style.border-color]="regEmail.invalid && regEmail.touched ? '#e74c3c' : '#ced4da'"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid; outline: none;"
+        >
+        <small *ngIf="regEmail.invalid && regEmail.touched" style="color: #e74c3c; font-size: 11px;">Enter a valid email address.</small>
+      </div>
+
+      <div style="margin-bottom: 15px; text-align: left;">
+        <input 
+          type="password" 
+          name="password"
+          [(ngModel)]="user.password" 
+          #regPass="ngModel"
+          required 
+          minlength="6"
+          placeholder="Password (Min. 6 characters)"
+          [style.border-color]="regPass.invalid && regPass.touched ? '#e74c3c' : '#ced4da'"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid; outline: none;"
+        >
+        <small *ngIf="regPass.invalid && regPass.touched" style="color: #e74c3c; font-size: 11px;">Min 6 characters required.</small>
+      </div>
+
+      <button 
+        (click)="onRegister()" 
+        [disabled]="regForm.invalid"
+        [style.opacity]="regForm.invalid ? '0.5' : '1'"
+        [style.cursor]="regForm.invalid ? 'not-allowed' : 'pointer'"
+      >
+        Sign Up
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      Already a member? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>

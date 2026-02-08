@@ -1,0 +1,33 @@
+# Java / Maven
+**/target/
+**/target/**
+*.class
+*.jar
+*.war
+*.ear
+**/.mvn/
+**/.settings/
+
+# IDE Metadata (The "Secret" Killers)
+**/.metadata/
+**/.metadata/**
+*.pma
+**/.plugins/
+
+# IntelliJ / VS Code
+**/.idea/
+*.iml
+**/.vscode/
+
+# Node / Frontend
+**/node_modules/
+**/dist/
+**/build/
+**/.angular/
+npm-debug.log*
+
+# OS / Misc
+.DS_Store
+Thumbs.db
+.env
+~$*

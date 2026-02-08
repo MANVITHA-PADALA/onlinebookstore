@@ -1,0 +1,135 @@
+<div class="main-container">
+  <div class="header-nav">
+    <h2>BookStore Dashboard <small><br>({{ role | uppercase }})</small></h2>
+    <button (click)="logout()" class="btn-logout">Logout</button>
+  </div>
+
+  <div *ngIf="role === 'admin'" class="admin-card">
+    <h3>{{ isEdit ? 'Edit Selected Book' : 'Add New Book to Inventory' }}</h3>
+    
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Book Title <span style="color: #e74c3c;">*</span></label>
+        <input 
+          [(ngModel)]="newBook.title" 
+          #title="ngModel" 
+          required 
+          placeholder="e.g. The Great Gatsby"
+          [style.border-color]="title.invalid && title.touched ? '#e74c3c' : '#ced4da'"
+        >
+        <small *ngIf="title.invalid && title.touched" style="color: #e74c3c; font-size: 11px; margin-top: 4px;">Title is required</small>
+      </div>
+
+      <div class="input-group">
+        <label>Author <span style="color: #e74c3c;">*</span></label>
+        <input 
+          [(ngModel)]="newBook.author" 
+          #author="ngModel" 
+          required 
+          placeholder="e.g. F. Scott Fitzgerald"
+          [style.border-color]="author.invalid && author.touched ? '#e74c3c' : '#ced4da'"
+        >
+        <small *ngIf="author.invalid && author.touched" style="color: #e74c3c; font-size: 11px; margin-top: 4px;">Author is required</small>
+      </div>
+
+      <div class="input-group small">
+        <label>Price ($) <span style="color: #e74c3c;">*</span></label>
+        <input 
+          type="number" 
+          [(ngModel)]="newBook.price" 
+          #price="ngModel" 
+          required 
+          min="0.01"
+          [style.border-color]="price.invalid && price.touched ? '#e74c3c' : '#ced4da'"
+        >
+      </div>
+
+      <div class="input-group small">
+        <label>Stock <span style="color: #e74c3c;">*</span></label>
+        <input 
+          type="number" 
+          [(ngModel)]="newBook.stock" 
+          #stock="ngModel" 
+          required 
+          min="0"
+          [style.border-color]="stock.invalid && stock.touched ? '#e74c3c' : '#ced4da'"
+        >
+      </div>
+      
+      <div class="form-actions">
+        <button 
+          (click)="addOrUpdate()" 
+          [disabled]="title.invalid || author.invalid || price.invalid || stock.invalid"
+          [class.btn-update]="isEdit" 
+          class="btn-primary"
+          [style.opacity]="(title.invalid || author.invalid || price.invalid || stock.invalid) ? '0.5' : '1'"
+          [style.cursor]="(title.invalid || author.invalid || price.invalid || stock.invalid) ? 'not-allowed' : 'pointer'"
+        >
+          {{ isEdit ? 'Update Details' : 'Add Book' }}
+        </button>
+        <button *ngIf="isEdit" (click)="reset()" class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="inventory-section" style="margin-top: 20px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+      
+      <div style="display: flex; border: 1px solid #ced4da; border-radius: 6px; overflow: hidden; flex: 1; max-width: 500px;">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (keyup.enter)="onSearch()" 
+          placeholder="Search by title or author..."
+          style="flex: 1; border: none; padding: 10px 15px; outline: none; font-size: 14px;"
+        >
+        <button 
+          (click)="onSearch()" 
+          style="background-color: #34495e; color: white; border: none; padding: 0 20px; cursor: pointer; font-weight: 600;"
+        >
+          Search
+        </button>
+      </div>
+
+      <button 
+        (click)="searchTerm=''; loadBooks()" 
+        style="background-color: #f8f9fa; border: 1px solid #ced4da; padding: 10px 15px; border-radius: 6px; cursor: pointer; color: #333; font-weight: 500;"
+      >
+        🔄 Refresh List
+      </button>
+    </div>
+
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Stock Status</th>
+          <th *ngIf="role === 'admin'" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td class="price-text">{{ book.price | currency }}</td>
+          <td>
+            <span [class.out-of-stock]="book.stock <= 0" class="stock-badge">
+              {{ book.stock > 0 ? book.stock + ' in stock' : 'Out of Stock' }}
+            </span>
+          </td>
+          <td *ngIf="role === 'admin'" class="action-cells">
+            <button (click)="edit(book)" class="btn-edit">Edit</button>
+            <button (click)="delete(book.id)" class="btn-delete">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="books.length === 0">
+          <td [attr.colspan]="role === 'admin' ? 5 : 4" class="no-data" style="text-align: center; padding: 20px; color: #7f8c8d;">
+            No books found matching your criteria.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
