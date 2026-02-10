@@ -4,10 +4,18 @@ A modern, full-stack e-commerce application for browsing and managing books. Thi
 
 ## 🚀 Tech Stack
 
-- **Frontend:** Angular 18+ (Bootstrap for Styling)
-- **Backend:** Java 17, Spring Boot 3.x, Spring Data JPA, Spring Security (JWT)
-- **Database:** MySQL 8.0
-- **DevOps:** Docker, Docker Compose, Azure (App Service + MySQL Flexible Server)
+🔹Frontend
+Angular 14+
+Reactive Forms for validation
+Bootstrap for responsive UI
+🔹 Backend
+Spring Boot (Java 17+)
+REST APIs using Spring MVC
+Spring Data JPA for database interaction
+Spring Security with CORS configuration
+🔹 Database
+Production: Azure MySQL Flexible Server
+Development: MySQL running in Docker
 
 ## 🏗️ Project Structure
 
@@ -17,3 +25,14 @@ online-book-store-project/
 ├── Backend/              # Spring Boot Application
 ├── docker-compose.yml    # Orchestration for local development
 └── README.md             # Project Documentation
+
+🏗️ Architecture
+The application follows a three-layer architecture:
+Angular Frontend  ➜  Spring Boot REST API  ➜  MySQL Database
+
+
+
+
+
+
+
